@@ -23,27 +23,24 @@ import {
   anyOf, TPrimitive
 } from './schemaTypes'
 import {serializerFromSchema} from './serialize'
-
-
-//Todo: import this enums from ts-types package
-export enum TRANSACTION_TYPE {
-  GENESIS = 1,
-  PAYMENT = 2,
-  ISSUE = 3,
-  TRANSFER = 4,
-  REISSUE = 5,
-  BURN = 6,
-  EXCHANGE = 7,
-  LEASE = 8,
-  CANCEL_LEASE = 9,
-  ALIAS = 10,
-  MASS_TRANSFER = 11,
-  DATA = 12,
-  SET_SCRIPT = 13,
-  SPONSORSHIP = 14,
-  SET_ASSET_SCRIPT = 15,
-  INVOKE_SCRIPT = 16,
-}
+import { ALIAS_TYPE, 
+  BURN_TYPE, 
+  CANCEL_LEASE_TYPE, 
+  DATA_TYPE, 
+  DIPLOMA_CAMPAIGN, 
+  EXCHANGE_TYPE, 
+  GENESIS_TYPE, 
+  INVOKE_SCRIPT_TYPE, 
+  ISSUE_TYPE, 
+  LEASE_TYPE, 
+  MASS_TRANSFER_TYPE, 
+  PAYMENT_TYPE, 
+  REISSUE_TYPE, 
+  SET_ASSET_SCRIPT_TYPE, 
+  SET_SCRIPT_TYPE, 
+  SPONSORSHIP_TYPE, 
+  TransactionType, 
+  TRANSFER_TYPE } from '@apsiocoin/ts-types'
 
 const shortConverter = {
   toBytes: SHORT,
@@ -134,6 +131,8 @@ export namespace txFields {
 
   export const senderPublicKey = base58field32('senderPublicKey')
 
+  export const sender = base58field32('sender')
+
   export const signature: TObjectField = ['signature', {
     toBytes: BASE58_STRING,
     fromBytes: P_BASE58_FIXED(64),
@@ -166,6 +165,22 @@ export namespace txFields {
   export const transfers: TObjectField = ['transfers', {
     type: 'array',
     items: transfer,
+  }]
+
+  export const diplome: TObject = {
+    type: 'object',
+    schema: [
+      assetId,
+      sender,
+      recipient,
+      assetName,
+      assetDescription,
+    ]
+  }
+
+  export const diplomes: TObjectField = ['diplomes', {
+    type: 'array',
+    items: diplome,
   }]
 
   const dataTxItem: TDataTxItem = {
@@ -483,6 +498,19 @@ export const massTransferSchemaV1: TSchema = {
   ],
 }
 
+export const diplomaCampaignSchemaV1: TSchema = {
+  type: 'object',
+  schema: [
+    txFields.type,
+    txFields.version,
+    txFields.senderPublicKey,
+    txFields.diplomes,
+    txFields.timestamp,
+    txFields.fee,
+    txFields.attachment,
+  ]
+}
+
 export const reissueSchemaV2: TSchema = {
   type: 'object',
   schema: [
@@ -559,51 +587,54 @@ export const transferSchemaV2: TSchema = {
  * Maps transaction types to schemas object. Schemas are written by keys. 1 equals no version or version 1
  */
 export const schemasByTypeMap = {
-  [TRANSACTION_TYPE.GENESIS]: {},
-  [TRANSACTION_TYPE.PAYMENT]: {},
-  [TRANSACTION_TYPE.ISSUE]: {
+  [GENESIS_TYPE]: {},
+  [PAYMENT_TYPE]: {},
+  [ISSUE_TYPE]: {
     2: issueSchemaV2,
   },
-  [TRANSACTION_TYPE.TRANSFER]: {
+  [TRANSFER_TYPE]: {
     2: transferSchemaV2,
   },
-  [TRANSACTION_TYPE.REISSUE]: {
+  [REISSUE_TYPE]: {
     2: reissueSchemaV2,
   },
-  [TRANSACTION_TYPE.BURN]: {
+  [BURN_TYPE]: {
     2: burnSchemaV2,
   },
-  [TRANSACTION_TYPE.EXCHANGE]: {
+  [EXCHANGE_TYPE]: {
     1: exchangeSchemaV1,
     2: exchangeSchemaV2,
   },
-  [TRANSACTION_TYPE.LEASE]: {
+  [LEASE_TYPE]: {
     2: leaseSchemaV2,
   },
-  [TRANSACTION_TYPE.CANCEL_LEASE]: {
+  [CANCEL_LEASE_TYPE]: {
     2: cancelLeaseSchemaV2,
   },
-  [TRANSACTION_TYPE.ALIAS]: {
+  [ALIAS_TYPE]: {
     2: aliasSchemaV2,
   },
-  [TRANSACTION_TYPE.MASS_TRANSFER]: {
+  [MASS_TRANSFER_TYPE]: {
     1: massTransferSchemaV1,
   },
-  [TRANSACTION_TYPE.DATA]: {
+  [DATA_TYPE]: {
     1: dataSchemaV1,
   },
-  [TRANSACTION_TYPE.SET_SCRIPT]: {
+  [SET_SCRIPT_TYPE]: {
     1: setScriptSchemaV1,
   },
-  [TRANSACTION_TYPE.SPONSORSHIP]: {
+  [SPONSORSHIP_TYPE]: {
     1: sponsorshipSchemaV1,
   },
-  [TRANSACTION_TYPE.SET_ASSET_SCRIPT]: {
+  [SET_ASSET_SCRIPT_TYPE]: {
     1: setAssetScriptSchemaV1,
   },
-  [TRANSACTION_TYPE.INVOKE_SCRIPT]: {
+  [INVOKE_SCRIPT_TYPE]: {
     1: invokeScriptSchemaV1,
   },
+  [DIPLOMA_CAMPAIGN]: {
+    1: diplomaCampaignSchemaV1,
+  }
 }
 
 export const orderVersionMap: Record<number, TObject> = {
@@ -612,7 +643,7 @@ export const orderVersionMap: Record<number, TObject> = {
   3: orderSchemaV3
 }
 
-export function getTransactionSchema(type: TRANSACTION_TYPE, version?: number): TSchema {
+export function getTransactionSchema(type: TransactionType, version?: number): TSchema {
   const schemas = (<any>schemasByTypeMap)[type]
   if (typeof schemas !== 'object') {
     throw new Error(`Incorrect tx type: ${type}`)

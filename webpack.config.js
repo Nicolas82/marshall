@@ -5,8 +5,8 @@ module.exports = {
     entry: './src/index.ts',
     output: {
         path: path.resolve(__dirname, 'dist/min'),
-        filename: 'waves-marshall.min.js',
-        library: 'WavesMarshall',
+        filename: 'apsiocoin-marshall.min.js',
+        library: 'ApsioCoinMarshall',
         //libraryTarget: 'commonjs'
     },
     plugins: [],

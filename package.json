@@ -1,9 +1,9 @@
 {
   "version": "0.14.0",
-  "name": "@waves/marshall",
+  "name": "@apsiocoin/marshall",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/wavesplatform/marshall",
+  "repository": "https://github.com/Nicolas82/marshall",
   "scripts": {
     "test": "jest",
     "build": "tsc && webpack --config webpack.config.js --env",
@@ -13,11 +13,15 @@
     "/src",
     "/dist"
   ],
-  "author": "Wavesplatform",
+  "author": "ApsioCoin",
   "contributors": [
     {
-      "name": "Sergey B",
-      "email": "siemarell@gmail.com"
+      "name": "Nicolas Saysset",
+      "email": "nicolassaysset@free.fr"
+    },
+    {
+      "name": "Luc Gireaud",
+      "email": "luc.gireaud@gmail.com"
     }
   ],
   "license": "MIT",
@@ -36,6 +40,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
+    "@apsiocoin/ts-types": "^0.0.3",
     "@types/base64-js": "^1.2.5",
     "@types/long": "^4.0.0",
     "@waves/parse-json-bignumber": "^1.0.1",
