@@ -643,7 +643,7 @@ export const orderVersionMap: Record<number, TObject> = {
   3: orderSchemaV3
 }
 
-export function getTransactionSchema(type: TransactionType, version?: number): TSchema {
+export function getTransactionSchema(type: number, version?: number): TSchema {
   const schemas = (<any>schemasByTypeMap)[type]
   if (typeof schemas !== 'object') {
     throw new Error(`Incorrect tx type: ${type}`)
