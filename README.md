@@ -1,4 +1,4 @@
-# @waves/marshall
+# @apsiocoin/marshall
 
 Marshall can serialize and parse Waves blockchain data structures
 

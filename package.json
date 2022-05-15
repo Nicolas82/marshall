@@ -13,7 +13,9 @@
     "/src",
     "/dist"
   ],
-  "author": "ApsioCoin",
+  "author": {
+    "name": "apsiocoin"
+  },
   "contributors": [
     {
       "name": "Nicolas Saysset",
