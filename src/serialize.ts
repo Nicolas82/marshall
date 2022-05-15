@@ -99,6 +99,7 @@ export function serializeTx<LONG = string | number>(tx: any, fromLongConverter?:
   const {type, version} = tx
   const schema = getTransactionSchema(type, version)
 
+
   return serializerFromSchema(schema, fromLongConverter)(tx)
 }
 

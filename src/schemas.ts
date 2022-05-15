@@ -131,7 +131,10 @@ export namespace txFields {
 
   export const senderPublicKey = base58field32('senderPublicKey')
 
-  export const sender = base58field32('sender')
+  export const sender : TObjectField = ['sender', {
+    toBytes: ADDRESS_OR_ALIAS,
+    fromBytes: byteToAddressOrAlias
+  }]
 
   export const signature: TObjectField = ['signature', {
     toBytes: BASE58_STRING,
@@ -507,7 +510,6 @@ export const diplomaCampaignSchemaV1: TSchema = {
     txFields.diplomes,
     txFields.timestamp,
     txFields.fee,
-    txFields.attachment,
   ]
 }
 

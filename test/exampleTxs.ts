@@ -217,6 +217,25 @@ export const massTransferTx = {
   attachment: 'aAaABbbBB43CcccffrrRRxxVVggFFrrEEwwZZyyYY22335511224422LL',
 }
 
+export const diplomaCampaignTx = {
+  type: 18,
+  version: 1,
+  fee: 10000,
+  senderPublicKey: '7GGPvAPV3Gmxo4eswmBRLb6bXXEhAovPinfcwVkA2LJh',
+  timestamp: 1542539421576,
+  id: '7mEAv8DgVgo9xgg4nSMNBeFjuKUsnnqanQgqFw2VEKmG',
+  proofs: ['2Un2WpTiFBdhhh7nXd99ci3gAqonuz4xBkWrDS1MJ5fUo9AW12aiYXi3KvnRrmt3C7HqE3BrokzAnYAckd3ggu7D'],
+  diplomes: [
+    {
+      assetId: '7mEAv8DgVgo9xgg4nSMNBeFjuKUsnnqanQgqFw2VEKmG',
+      sender: '3PPnqZznWJbPG2Z1Y35w8tZzskiq5AMfUXr',
+      recipient: '3N3Cn2pYtqzj7N9pviSesNe8KG9Cmb718Y1',
+      name: 'IUT Blagnac APSIO 2021-2022',
+      description: 'My first Diploma'
+    }
+  ]
+}
+
 export const dataTx = {
   type: 12,
   version: 1,
@@ -384,6 +403,7 @@ export const exampleTxs = {
   14: sponsorshipTx,
   15: setAssetScriptTx,
   16: invokeScriptTx,
+  18: diplomaCampaignTx,
 }
 
 export const exampleBytesStr = {
